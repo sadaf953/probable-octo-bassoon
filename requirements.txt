@@ -70,7 +70,7 @@ click==8.1.7
 cohere==5.5.3
 colorama==0.4.6
 coloredlogs==15.0.1
-crewai==0.19.2
+crewai==0.30.0
 crewai-tools==0.2.6
 dataclasses-json==0.6.6
 decorator==5.1.1
@@ -244,6 +244,13 @@ ollama==0.1.7
 langchain-google-genai==1.0.4
 langchain-ollama==0.1.0
 google-generativeai==0.5.4
+
+# Environment and Configuration
+python-dotenv==1.0.0
+
+# AI and Workflow Libraries
+crewai==0.30.0
+streamlit==1.32.0
 
 # Web Automation
 selenium==4.16.1

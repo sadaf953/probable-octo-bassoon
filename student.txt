@@ -1,7 +1,0 @@
-B.Tech College Name: https://amazon.ca
-B.Tech CGPA: 9.52
-Course Taken in B.Tech: DSAI
-Course of Interest for M.Tech in AI: Artificial Intellegence
-Preferred Intake Period: February
-Desired Year of Intake: 2025
-Indian Student: True
