@@ -98,5 +98,6 @@ def main():
     if st.button("🌐 Search Colleges"):
       # ... (Your college search logic here) ...
 
+
 if __name__ == "__main__":
     main()

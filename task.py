@@ -82,7 +82,7 @@ collect_student_info_task = create_task(
 rank_universities_task = create_task(
     description=(
         f"""
-        Rank the top 15 universities in Australia offering M.Tech in Artificial Intelligence based on the student's academic profile. 
+        Rank the top 15 universities in {student_data.get('Target Countries', ['USA'])[0]} offering M.Tech in Artificial Intelligence based on the student's academic profile. 
         The University Ranking Agent will use web search tools to gather data on curriculum quality, global reputation, faculty expertise, 
         and any specific student preferences provided. Additionally, factor in the intake period ({intake_period or 'N/A'}) and the desired year of intake ({intake_year or 'N/A'}).
 
@@ -100,7 +100,7 @@ rank_universities_task = create_task(
         """
     ),
     expected_output="""
-        A ranked list of the top 15 universities in Australia offering M.Tech in Artificial Intelligence, tailored to the student's profile, including intake period and year.
+        A ranked list of the top 15 universities offering M.Tech in Artificial Intelligence, tailored to the student's profile, including intake period and year.
         Each university entry should include a link to the official website and a citation of the sources used for the ranking.
         """,
     tools=[search_tool, docs_tool],
@@ -111,22 +111,28 @@ fetch_curriculum_task = create_task(
     description=(
         f"""
         Fetch detailed curriculum information for the M.Tech in Artificial Intelligence programs from the top 15 universities 
-        in Australia, considering the preferred intake period ({intake_period or 'N/A'}) and the desired year of intake ({intake_year or 'N/A'}). The Curriculum Fetching Agent will gather information on the courses, labs, projects, and any other 
-        relevant academic activities offered in these programs.
+        in {student_data.get('Target Countries', ['USA'])[0]}, considering the preferred intake period ({intake_period or 'N/A'}) and the desired year of intake ({intake_year or 'N/A'}). 
+        The Curriculum Fetching Agent will gather information on the courses, labs, projects, and research opportunities in AI and related fields.
 
-        The curriculum should be analyzed for its relevance to current industry trends in AI, and its potential to provide the 
-        skills and knowledge necessary for the student's career goals.
+        Focus on universities that align with the following student profile:
+        - B.Tech College Name: {btech_college_name or 'N/A'}
+        - B.Tech CGPA: {btech_cgpa or 'N/A'}
+        - Course Taken in B.Tech: {btech_course or 'N/A'}
+        - Preferred M.Tech Course: {mtech_interest or 'N/A'}
+        - Intake Period: {intake_period or 'N/A'}
+        - Desired Year of Intake: {intake_year or 'N/A'}
 
-        The specific M.Tech program of interest: {mtech_interest or 'N/A'}
-        Intake Period: {intake_period or 'N/A'}
-        Desired Year of Intake: {intake_year or 'N/A'}
-
-        Provide links to the relevant curriculum pages on the universities' official websites, and cite the sources used to gather this information.
+        For each university, provide:
+        - Detailed curriculum structure
+        - Core and elective courses in AI
+        - Research and project opportunities
+        - Faculty expertise
+        - Links to official program pages
         """
     ),
     expected_output="""
-        A comprehensive report detailing the curriculum of M.Tech in Artificial Intelligence programs from the top 15 universities.
-        Each curriculum entry should include a link to the relevant curriculum page on the university's official website and citations of the sources used.
+        A comprehensive report on the curriculum details for top 15 universities offering M.Tech in Artificial Intelligence.
+        Include a detailed breakdown of courses, research opportunities, and program highlights.
         """,
     tools=[search_tool, docs_tool],
     agent=curriculum_fetching_agent,
@@ -136,8 +142,9 @@ fetch_fees_scholarships_task = create_task(
     description=(
         f"""
         Collect information on the yearly fee structures and available scholarships for the top 15 universities of
-        Australia offering M.Tech in Artificial Intelligence. The Fee and Scholarship Agent will research and compile 
-        comprehensive details about tuition costs, living expenses, and potential scholarship opportunities.
+        {student_data.get('Target Countries', ['USA'])[0]} offering M.Tech in Artificial Intelligence. 
+        The Fee and Scholarship Agent will research and compile comprehensive details about tuition costs, living expenses, 
+        and potential scholarship opportunities.
 
         Consider the following profile details:
         - B.Tech CGPA: {btech_cgpa or 'N/A'}

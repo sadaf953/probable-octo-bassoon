@@ -29,9 +29,47 @@ def collect_student_input():
     mtech_interest = st.text_input("Course of Interest in M.Tech")
     
     # Additional Academic Details
-    tenth_percentage = st.number_input("10th Percentage", min_value=0.0, max_value=100.0, step=0.1)
-    twelfth_percentage = st.number_input("12th Percentage", min_value=0.0, max_value=100.0, step=0.1)
-    gre_gmat_score = st.number_input("GRE/GMAT Score (if applicable)", min_value=0)
+    tenth_percentage = st.text_input("10th Percentage", 
+                                     placeholder="Enter percentage (e.g., 85.5)",
+                                     help="Enter your 10th percentage without trailing zeros")
+    
+    twelfth_percentage = st.text_input("12th Percentage", 
+                                       placeholder="Enter percentage (e.g., 85.5)",
+                                       help="Enter your 12th percentage without trailing zeros")
+    
+    # Validate percentages
+    def validate_percentage(percentage_str):
+        try:
+            # Remove any whitespace
+            percentage_str = percentage_str.strip()
+            
+            # Convert to float
+            percentage = float(percentage_str)
+            
+            # Check if percentage is within valid range
+            if 0 <= percentage <= 100:
+                # Remove trailing zeros after decimal point
+                return float(f"{percentage:.2f}")
+            else:
+                st.warning(f"Invalid percentage: {percentage_str}. Please enter a value between 0 and 100.")
+                return None
+        except ValueError:
+            st.warning(f"Invalid input: {percentage_str}. Please enter a numeric value.")
+            return None
+    
+    # Validate and convert percentages
+    tenth_percentage_validated = validate_percentage(tenth_percentage)
+    twelfth_percentage_validated = validate_percentage(twelfth_percentage)
+    
+    # Additional percentage checks
+    if tenth_percentage_validated is not None and tenth_percentage_validated < 33.0:
+        st.warning("10th percentage seems low. Minimum eligibility is typically 33%.")
+    
+    if twelfth_percentage_validated is not None and twelfth_percentage_validated < 45.0:
+        st.warning("12th percentage seems low. Minimum eligibility is typically 45%.")
+    
+    gre_gmat_score = st.text_input("GRE/GMAT Score (if applicable)", 
+                                   help="Enter numeric score")
     ielts_toefl_score = st.number_input("IELTS/TOEFL Score", min_value=0.0, step=0.5)
     
     # Projects and Experience
@@ -52,8 +90,8 @@ def collect_student_input():
         "B.Tech CGPA": btech_cgpa,
         "Course Taken in B.Tech": btech_course,
         "Course of Interest in M.Tech": mtech_interest,
-        "10th Percentage": tenth_percentage,
-        "12th Percentage": twelfth_percentage,
+        "10th Percentage": tenth_percentage_validated,
+        "12th Percentage": twelfth_percentage_validated,
         "GRE/GMAT Score": gre_gmat_score,
         "IELTS/TOEFL Score": ielts_toefl_score,
         "Relevant Projects/Research Experience": projects,
